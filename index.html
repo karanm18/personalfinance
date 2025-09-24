@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Family Finance Tracker - Shreya & Karan</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="passwordScreen" class="password-screen">
+        <div class="password-container">
+            <div class="password-header">
+                <div class="logo">💰</div>
+                <h1>Mehta's</h1>
+                <p>Shreya & Karan's Shared Finances</p>
+            </div>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="passwordInput">Enter Password</label>
+                    <input type="password" id="passwordInput" class="form-input" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    🔓 UNLOCK FAMILY FINANCES
+                </button>
+                <div id="passwordError" class="error-message hidden">
+                    ❌ Incorrect password. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="app" class="app hidden">
+        <div class="background-aurora"></div>
+
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 id="userGreeting">💑 SHARED FINANCES</h1>
+                    <div class="balance-display">
+                        <span class="balance-label">Family Balance</span>
+                        <span class="balance-value" id="familyBalance">NZ$0</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button id="activityBtn" class="header-icon-btn">🔔</button>
+                    <button id="userSwitchBtn" class="user-switch-btn">
+                        👩 SHREYA
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <button id="floatingAddBtn" class="floating-btn">
+            <div class="floating-btn-icon">➕</div>
+        </button>
+
+        <main class="main-content">
+            <div id="dashboard" class="screen active">
+                <section class="overview-section">
+                    <div class="stats-grid">
+                        <div class="stat-card income">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-value" id="familyIncome">NZ$0</div>
+                            <div class="stat-label">FAMILY INCOME</div>
+                        </div>
+                        <div class="stat-card expense">
+                            <div class="stat-icon">💸</div>
+                            <div class="stat-value" id="familyExpenses">NZ$0</div>
+                            <div class="stat-label">FAMILY EXPENSES</div>
+                        </div>
+                        <div class="stat-card savings">
+                            <div class="stat-icon">🏦</div>
+                            <div class="stat-value" id="familySavings">NZ$0</div>
+                            <div class="stat-label">FAMILY SAVINGS</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="section-header">
+                        <h2>RECENT TRANSACTIONS</h2>
+                        <button class="btn btn-secondary btn-sm" onclick="showScreen('transactions')">
+                            View All →
+                        </button>
+                    </div>
+                    <div id="recentTransactionsList" class="transactions-list">
+                        </div>
+                </section>
+            </div>
+
+            <div id="transactions" class="screen">
+                <section class="section">
+                    <div class="section-header">
+                        <h2>ALL TRANSACTIONS</h2>
+                    </div>
+                    <div id="allTransactionsList" class="transactions-list">
+                        </div>
+                </section>
+            </div>
+
+            <div id="budget" class="screen">
+                <section class="section">
+                    <h2>MONTHLY BUDGET</h2>
+                    <div class="card budget-input-card">
+                         <div class="budget-input-section">
+                            <div class="form-group">
+                                <label for="totalBudgetInput">Total Family Budget (NZ$)</label>
+                                <input type="number" id="totalBudgetInput" class="form-input" placeholder="e.g., 5000" step="100" min="0">
+                            </div>
+                            <button id="setBudgetBtn" class="btn btn-primary">
+                                📊 SET BUDGET
+                            </button>
+                        </div>
+                    </div>
+                   
+                    <div class="section-header">
+                        <h3>BUDGET CATEGORIES</h3>
+                        <div class="budget-total" id="budgetTotal">Total: NZ$0</div>
+                    </div>
+                    <div id="budgetDisplay" class="budget-categories">
+                        </div>
+                </section>
+            </div>
+
+            <div id="goals" class="screen">
+                <section class="section">
+                     <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="thisMonthSavings">NZ$0</div>
+                            <div class="stat-label">THIS MONTH'S SAVINGS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="savingsRatePercent">0%</div>
+                            <div class="stat-label">SAVINGS RATE</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="goalsProgress">0%</div>
+                            <div class="stat-label">TOTAL GOAL PROGRESS</div>
+                        </div>
+                    </div>
+
+                    <div class="section-header">
+                        <h2>SAVINGS GOALS</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openGoalModal()">
+                            🎯 NEW GOAL
+                        </button>
+                    </div>
+                    <div id="goalsDisplay" class="goals-list">
+                       </div>
+                </section>
+            </div>
+
+            <div id="analytics" class="screen">
+                <section class="section">
+                    <h2>FINANCIAL ANALYTICS</h2>
+                    
+                    <div class="card">
+                        <h3>This Month's Summary</h3>
+                        <div id="monthlySummaryContainer">
+                            </div>
+                    </div>
+
+                    <section class="overview-section">
+                        <div class="section-header">
+                            <h2>LIFETIME SUMMARY</h2>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card income">
+                                <div class="stat-icon">💰</div>
+                                <div class="stat-value" id="lifetimeIncome">NZ$0</div>
+                                <div class="stat-label">TOTAL INCOME</div>
+                            </div>
+                            <div class="stat-card expense">
+                                <div class="stat-icon">💸</div>
+                                <div class="stat-value" id="lifetimeExpenses">NZ$0</div>
+                                <div class="stat-label">TOTAL EXPENSES</div>
+                            </div>
+                            <div class="stat-card savings">
+                                <div class="stat-icon">🏦</div>
+                                <div class="stat-value" id="lifetimeSavings">NZ$0</div>
+                                <div class="stat-label">TOTAL SAVINGS</div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <div class="card">
+                        <h3>Spending by Category (This Month)</h3>
+                        <div id="categoryDonutChartContainer">
+                            </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Monthly Cash Flow (Last 6 Months)</h3>
+                        <div id="cashFlowChartContainer">
+                            </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Export Data</h3>
+                        <p style="color: var(--color-text-secondary); font-size: var(--font-size-sm); margin-bottom: var(--space-16); line-height: 1.5;">
+                            Download your complete transaction history as a .csv file, compatible with Excel and Google Sheets.
+                        </p>
+                        <button id="downloadCsvBtn" class="btn btn-secondary btn-full">
+                            📥 DOWNLOAD ALL TRANSACTIONS
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-screen="dashboard">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">HOME</span>
+            </button>
+            <button class="nav-btn" data-screen="transactions">
+                <span class="nav-icon">💳</span>
+                <span class="nav-label">TRANSACTIONS</span>
+            </button>
+            <button class="nav-btn" data-screen="budget">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">BUDGET</span>
+            </button>
+            <button class="nav-btn" data-screen="goals">
+                <span class="nav-icon">🎯</span>
+                <span class="nav-label">GOALS</span>
+            </button>
+            <button class="nav-btn" data-screen="analytics">
+                <span class="nav-icon">📈</span>
+                <span class="nav-label">ANALYTICS</span>
+            </button>
+        </nav>
+
+        <div id="transactionModal" class="modal">
+            <div class="modal-overlay" onclick="closeModal()"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>New Transaction</h3>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="transactionForm">
+                        <div class="transaction-type-toggle">
+                            <button type="button" class="toggle-btn active" data-type="expense">💸 EXPENSE</button>
+                            <button type="button" class="toggle-btn" data-type="income">💰 INCOME</button>
+                        </div>
+                        <div class="form-group"><label for="amount">Amount (NZ$)</label><input type="number" id="amount" class="form-input" placeholder="0.00" step="0.01" min="0" required></div>
+                        <div class="form-group"><label for="category">Category</label><select id="category" class="form-input" required><option value="">Select Category</option></select></div>
+                        <div class="form-group"><label for="description">Description (Optional)</label><input type="text" id="description" class="form-input" placeholder="e.g., Weekly Groceries"></div>
+                        <div class="form-group"><label for="date">Date</label><input type="date" id="date" class="form-input" required></div>
+                        <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal()">CANCEL</button><button type="submit" class="btn btn-primary">ADD TRANSACTION</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="goalModal" class="modal">
+            <div class="modal-overlay" onclick="closeModal()"></div>
+            <div class="modal-content">
+                <div class="modal-header"><h3>Create Savings Goal</h3><button class="modal-close" onclick="closeModal()">×</button></div>
+                <div class="modal-body">
+                    <form id="goalForm">
+                        <div class="form-group"><label for="goalName">Goal Name</label><input type="text" id="goalName" class="form-input" placeholder="e.g., Trip to Japan" required></div>
+                        <div class="form-group"><label for="targetAmount">Target Amount (NZ$)</label><input type="number" id="targetAmount" class="form-input" placeholder="5000" step="100" min="0" required></div>
+                        <div class="form-group"><label for="targetDate">Target Date</label><input type="date" id="targetDate" class="form-input" required></div>
+                        <div class="form-group"><label for="goalCategory">Category</label><select id="goalCategory" class="form-input" required>
+                                <option value="">Select Category</option>
+                                <option value="Emergency Fund">💰 Emergency Fund</option>
+                                <option value="Vacation">🏖️ Vacation</option>
+                                <option value="Home Down Payment">🏠 Home Down Payment</option>
+                                <option value="Car Purchase">🚗 Car Purchase</option>
+                                <option value="Wedding">💒 Wedding</option>
+                                <option value="Education">📚 Education</option>
+                                <option value="Investment">📈 Investment</option>
+                                <option value="Gadgets & Tech">📱 Gadgets & Tech</option>
+                                <option value="Home Improvement">🔨 Home Improvement</option>
+                                <option value="General Savings">🎯 General Savings</option>
+                            </select></div>
+                        <div class="form-group"><label for="currentAmount">Initial Amount (Optional)</label><input type="number" id="currentAmount" class="form-input" placeholder="0.00" step="10" min="0"></div>
+                        <div class="form-actions"><button type="button" class="btn btn-secondary" onclick="closeModal()">CANCEL</button><button type="submit" class="btn btn-primary">CREATE GOAL</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div id="activityModal" class="modal">
+            <div class="modal-overlay" onclick="closeModal()"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Recent Activity</h3>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="activityFeedContainer" class="activity-container">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

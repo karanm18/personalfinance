@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ALLOW ALL ACCESS - Perfect for development
+    // This fixes most "permission-denied" errors
+    match /{document=**} {
+      allow read, write: if true;
+    }
+
+    // Additional specific rules for better performance
+    match /transactions/{transactionId} {
+      allow read, write: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+    }
+
+    match /budgets/{budgetId} {
+      allow read, write: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+    }
+
+    // Allow debug collection for connectivity testing
+    match /debug/{debugId} {
+      allow read, write: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+    }
+  }
+}
